@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h1>Click the button to reset points of all employees</h1>
+<h2 style="color:red;">NOTE: THIS CANNOT BE UNDONE</h2>
+<h3 style="color:red;">ONLY PRESS ONCE</h3>
+<form action="/resetPoints" method="post" onsubmit="submitButton.disabled = true; return true;">
+    <button action="/resetPoints" value="Reset points" name=submitButton>Reset Points</button>
+</form>
+
+<br><br>
+<button onclick="location.href='/menu'" type="button">Back to Menu</button><br><br>
+{% endblock %}

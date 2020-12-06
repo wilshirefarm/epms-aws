@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+ <head>
+    <title>{% block title %} Employee Point System {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="shortcut icon" href="../static/favicon.ico"/>
+  </head>
+  <div>
+    <nav>
+        <ul>
+          <li><a href="/">Employee Point System</a>
+          {% if 'email' in session %}
+            <li><a href="/logout">Log Out</a>
+            <li><a href="/">Hi, {{ session['email'] }}</a>
+          {% elif 'admin' in session %}
+            <li><a href="/logout">Log Out</a>
+            <li><a href="/">Hi, {{ session['admin'] }}</a>
+          {% else %}
+            <li><a href="/register">Register</a>
+            <li><a href="/">Log In</a>
+          {% endif %}
+        </ul>
+    </nav>
+  </div>
+
+    <header>
+      {% block header %} {% endblock %}
+    </header>
+
+    {% block content %} {% endblock %}
+
+    {% for message in get_flashed_messages() %}
+      <br><div class="flash">{{ message }}</div>
+    {% endfor %}
+    <br>
+
+</html>

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Transactions {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  	<table>
+		<tr>
+			<th>Transaction ID</th>
+			<th>Points Given By</th>
+			<th>Points Given To</th>
+			<th>Points</th>
+			<th>Comments</th>
+			<th>Date</th>
+		</tr>
+		{% for transaction in transactions %}
+		<tr>
+			<td>{{ transaction[0] }}</td>
+			<td>{{ transaction[1] }}</td>
+			<td>{{ transaction[2] }}</td>
+			<td>{{ transaction[3] }}</td>
+			<td>{{ transaction[4] }}</td>
+			<td>{{ transaction[5] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
+
+    <br>
+    <button onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
+{% endblock %}

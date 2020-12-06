@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Redemptions Made {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  	<table>
+		<tr>
+			<th>Redemption ID</th>
+			<th>Email</th>
+			<th>Reward</th>
+			<th>Reward Cost</th>
+			<th>Date</th>
+		</tr>
+		{% for redemption in redemptions %}
+		<tr>
+			<td>{{ redemption[0] }}</td>
+			<td>{{ redemption[1] }}</td>
+			<td>{{ redemption[2] }}</td>
+			<td>{{ redemption[3] }}</td>
+			<td>{{ redemption[4] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
+
+    <br>
+    <button onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
+{% endblock %}

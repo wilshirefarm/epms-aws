@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Redeem Points {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<body>
+		<h2>Hi, {{ firstName }}</h2>
+		<p>You have a total of <b>{{ pointsReceived }}</b> points to redeem.</p>
+
+		<form method="post" action="{{ url_for('redeem') }}" onsubmit="submitButton.disabled = true; return true;">
+			<h3>Select what you want</h3>
+			<label for="rewardSelection">Reward:</label>
+	    	<select name="rewardSelection">
+	      	{% for reward in rewards %}
+	        	<option value='{{ reward }}'>{{ reward[1] + ' - ' + reward[2] }}</option>
+	      	{% endfor %}
+	    	</select>
+	    	<input type="submit" name="submitButton">
+  		</form>
+	</body>
+	<br>
+	
+  	<button onclick="location.href='/redeemMenu'" type="button">Back to Redemption Home</button><br><br>
+	<br>
+
+  	<button onclick="location.href='/menu'" type="button">Back to Menu</button><br><br>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Points Report {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="column">
+  	<h2>Total Points Given Out By Month</h2>
+	<table>
+		<tr>
+			<th>Month</th>
+			<th>Year</th>
+			<th>Total Points Given out</th>
+		</tr>
+		{% for row in pointsGivenOutByMonth %}
+		<tr>
+			<td>{{ row[0] }}</td>
+			<td>{{ row[1] }}</td>
+			<td>{{ row[2] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
+ 	<br>
+ 	<h2>Points Given Out By Month By User</h2>
+	<table>
+		<tr>
+			<th>Month</th>
+			<th>Year</th>
+			<th>Employee</th>
+			<th>Total Points Given out</th>
+		</tr>
+		{% for row in pointsGivenOutByMonthByUser %}
+		<tr>
+			<td>{{ row[0] }}</td>
+			<td>{{ row[1] }}</td>
+			<td>{{ row[2] }}</td>
+			<td>{{ row[3] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
+ 	<br>
+ 	<h2>Points Received By Month By User</h2>
+	<table>
+		<tr>
+			<th>Month</th>
+			<th>Year</th>
+			<th>Employee</th>
+			<th>Total Points Received</th>
+		</tr>
+		{% for row in pointsReceivedByMonthByUser %}
+		<tr>
+			<td>{{ row[0] }}</td>
+			<td>{{ row[1] }}</td>
+			<td>{{ row[2] }}</td>
+			<td>{{ row[3] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
+ 	<br>
+  </div>
+  <div class="column">
+  	<h2>Total Points Cashed In (Redeemed)</h2>
+	<table>
+		<tr>
+			<th>Month</th>
+			<th>Year</th>
+			<th>Total Points Redeemed</th>
+		</tr>
+		{% for row in pointsRedeededByMonth %}
+		<tr>
+			<td>{{ row[0] }}</td>
+			<td>{{ row[1] }}</td>
+			<td>{{ row[2] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
+ 	<h2>Points Redeemed By User in past 2 months</h2>
+	<table>
+		<tr>
+			<th>Month</th>
+			<th>Year</th>
+			<th>Employee</th>
+			<th>Total Points Reedeemed</th>
+		</tr>
+		{% for row in pointsRedeemedByMonthByUser %}
+		<tr>
+			<td>{{ row[0] }}</td>
+			<td>{{ row[1] }}</td>
+			<td>{{ row[2] }}</td>
+			<td>{{ row[3] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
+ 	<br>
+  <h2>Employees who still have points to give out</h2>
+	<table>
+		<tr>
+			<th>Employee</th>
+			<th>Points not yet gifted this Month</th>
+		</tr>
+		{% for row in employeesNotUsingAllPoints %}
+		<tr>
+			<td>{{ row[0] }}</td>
+			<td>{{ row[1] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
+ 	<br>
+  </div>
+</div>
+ 	<br><br>
+	<button onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
+{% endblock %}

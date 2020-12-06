@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Rewards {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="column">
+			<button onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
+			<form method="post" action="/rewards?action=add" onsubmit="submitButton.disabled = true">
+				<h3>Add a Reward</h3>
+
+				<label for="rewardName">Reward Name:</label>
+				<input name="rewardName" id="rewardName" required><br><br>
+
+				<label for="rewardCost">Reward Cost:</label>
+				<input type="number" min="1" name="rewardCost" id="rewardCost" required><br><br>
+
+				<input type="submit" value="Submit" name="submitButton">
+
+		    </form><br><br>
+
+		    <form method="post" action="/rewards?action=remove" onsubmit="submitButton.disabled = true">
+
+				<h3>Remove a Reward</h3>
+					<label for="rewardSelection">Reward:</label>
+			    	<select name="rewardSelection" required>
+			    		<option disabled selected value> -- select a reward -- </option>
+				      	{% for reward in rewards %}
+				        	<option value='{{ reward }}'>{{ reward[1] + ' - ' + reward[2] }}</option>
+				      	{% endfor %}
+			    	</select><br><br>
+
+					<input type="submit" value="Submit" name="submitButton">
+
+		    </form><br>
+		</div>
+		<div class="column">
+			<h2>List of Rewards</h2>
+		  	<table>
+				<tr>
+					<th>Reward ID</th>
+					<th>Reward</th>
+					<th>Reward Cost</th>
+				</tr>
+				{% for reward in rewards %}
+				<tr>
+					<td>{{ reward[0] }}</td>
+					<td>{{ reward[1] }}</td>
+					<td>{{ reward[2] }}</td>
+				</tr>
+				{% endfor %}
+		 	</table>
+		</div>
+	</div>
+
+{% endblock %}

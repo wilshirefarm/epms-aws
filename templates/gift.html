@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Gift Menu {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<p>You have a total of <b>{{ pointsToGive }}</b> points to gift.</p>
+
+<form action="/gift" method="post" onsubmit="submitButton.disabled = true; return true;">
+    <label for="recipient">Recipient's email:</label>
+    <input name="recipient" id="recipient" required><br><br>
+
+    <label for="pointsToGive">Points:</label>
+    <input name="pointsToGive" id="pointsToGive" required><br><br>
+
+    <label for="Comments">Message:</label>
+    <input name="Comments" id="Comments"><br><br>
+
+    <input type="submit" value="Transfer Points" name="submitButton">
+  </form><br><br>
+
+<button onclick="location.href='/menu'" type="button">Back to Menu</button><br><br>
+{% endblock %}

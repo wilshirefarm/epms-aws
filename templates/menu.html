@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Hi, {{ firstName }} {% endblock %}</h1>
+  <h2>What would you like to do?</h2>
+{% endblock %}
+
+{% block content %}
+	<button onclick="location.href='/giftMenu'">Gift Points</button><br><br>
+	<button onclick="location.href='/redeemMenu'" type="button">Redemptions</button><br><br>
+	<button onclick="location.href='/history'" type="button">See History of Points Received/Given</button><br><br><br>
+
+	<img src="../static/giftbox.png" >
+{% endblock %}

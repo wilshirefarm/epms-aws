@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="post" onsubmit="submitButton.disabled = true; return true;">
+	    <label for="password">Email Address:</label>
+	    <input type="email" name="email" id="email" required><br><br>
+
+	    <label for="firstName">First Name:</label>
+	    <input name="firstName" id="firstName" required><br><br>
+
+	    <label for="lastName">Last Name:</label>
+	    <input name="lastName" id="lastName" required><br><br>
+
+	    <label for="password">Password:</label>
+	    <input type="password" name="password" id="password" required><br><br>
+
+	    <input type="submit" value="Register" name="submitButton">
+	</form>  
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Admin Portal {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<button onclick="location.href='/employees'" type="button">Employees</button><br><br>
+	<button onclick="location.href='/redemptions'" type="button">Redemptions</button><br><br>
+	<button onclick="location.href='/transactions'" type="button">Transactions</button><br><br>
+	<button onclick="location.href='/rewards'" type="button">Rewards</button><br><br>
+	<button onclick="location.href='/pointsReport'" type="button">Points Report</button><br><br>
+	<button style="color:red;" onclick="location.href='/resetPoints'" type="button">Reset Points</button><br><br>
+
+	<img src="../static/giftbox.png" >
+{% endblock %}

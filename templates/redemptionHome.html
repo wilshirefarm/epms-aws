@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Redeem Points {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<body>
+    	<h2>Hi, {{ firstName }}</h2>
+  		<h3>You have {{ pointsReceived }} points that you can redeem</h3>
+
+      	<button onclick="location.href='/redeem'" type="button">Redeem Points</button><br><br>
+
+		<h3>List of Redemptions you've made</h3>
+		<table>
+			<tr>
+				<th>Reward Name</th>
+				<th>Date Redeemed</th>
+				<th>Reward Cost</th>
+			</tr>
+			{% for redemption in redemptions %}
+			<tr>
+				<td>{{ redemption[0] }}</td>
+				<td>{{ redemption[1] }}</td>
+				<td>{{ redemption[2] }}</td>
+			</tr>
+			{% endfor %}
+	 	</table>
+
+
+    <br>
+    <button onclick="location.href='/menu'" type="button">Back to Menu</button><br><br>
+	</body>
+{% endblock %}

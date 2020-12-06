@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Your Points History {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <body>
+    	<h2>Hi, {{ firstName }}</h2>
+
+		<h2>Points Received</h2>
+		<p>You have {{ pointsReceived }} points that you can redeem.</p>
+		<table>
+			<tr>
+				<th>From</th>
+				<th>Points</th>
+				<th>TimeStamp</th>
+        <th>Comments</th>
+			</tr>
+			{% for transaction in transactionsReceived %}
+			<tr>
+				<td>{{ transaction[0] + " - " + transaction[1]}}</td>
+				<td>{{ transaction[2] }}</td>
+				<td>{{ transaction[3] }}</td>
+        		<td>{{ transaction[4] }}</td>
+			</tr>
+			{% endfor %}
+	 	</table>
+	 	<br>
+	 	<h2>Points Given</h2>
+	 	<p>You have {{ pointsToGive }} points that you can gift.</p>
+		<table>
+			<tr>
+				<th>To</th>
+				<th>Points</th>
+				<th>TimeStamp</th>
+        <th>Comments</th>
+			</tr>
+			{% for transaction in transactionsGiven %}
+			<tr>
+				<td>{{ transaction[0] + " - " + transaction[1]}}</td>
+				<td>{{ transaction[2] }}</td>
+				<td>{{ transaction[3] }}</td>
+        		<td>{{ transaction[4] }}</td>
+			</tr>
+			{% endfor %}
+	 	</table>
+
+    <br>
+    <button onclick="location.href='/menu'" type="button">Back to Menu</button><br><br>
+	</body>
+{% endblock %}
