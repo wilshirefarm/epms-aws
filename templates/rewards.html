@@ -5,54 +5,51 @@
 {% endblock %}
 
 {% block content %}
-	<div class="row">
-		<div class="column">
-			<button onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
-			<form method="post" action="/rewards?action=add" onsubmit="submitButton.disabled = true">
-				<h3>Add a Reward</h3>
+	<h2>List of Rewards</h2>
+  	<table>
+		<tr>
+			<th>Reward ID</th>
+			<th>Reward</th>
+			<th>Reward Cost</th>
+		</tr>
+		{% for reward in rewards %}
+		<tr>
+			<td>{{ reward[0] }}</td>
+			<td>{{ reward[1] }}</td>
+			<td>{{ reward[2] }}</td>
+		</tr>
+		{% endfor %}
+ 	</table>
 
-				<label for="rewardName">Reward Name:</label>
-				<input name="rewardName" id="rewardName" required><br><br>
+	<form method="post" action="/rewards?action=add" onsubmit="submitButton.disabled = true">
+		<h3>Add a Reward</h3>
 
-				<label for="rewardCost">Reward Cost:</label>
-				<input type="number" min="1" name="rewardCost" id="rewardCost" required><br><br>
+		<label for="rewardName">Reward Name:</label>
+		<input name="rewardName" id="rewardName" required><br><br>
 
-				<input type="submit" value="Submit" name="submitButton">
+		<label for="rewardCost">Reward Cost:</label>
+		<input type="number" min="1" name="rewardCost" id="rewardCost" required><br><br>
 
-		    </form><br><br>
+		<input class="blueButton" type="submit" value="Submit" name="submitButton">
 
-		    <form method="post" action="/rewards?action=remove" onsubmit="submitButton.disabled = true">
+    </form><br><br>
 
-				<h3>Remove a Reward</h3>
-					<label for="rewardSelection">Reward:</label>
-			    	<select name="rewardSelection" required>
-			    		<option disabled selected value> -- select a reward -- </option>
-				      	{% for reward in rewards %}
-				        	<option value='{{ reward }}'>{{ reward[1] + ' - ' + reward[2] }}</option>
-				      	{% endfor %}
-			    	</select><br><br>
+    <form method="post" action="/rewards?action=remove" onsubmit="submitButton.disabled = true">
 
-					<input type="submit" value="Submit" name="submitButton">
+		<h3>Remove a Reward</h3>
+			<label for="rewardSelection">Reward:</label>
+	    	<select name="rewardSelection" required>
+	    		<option disabled selected value> -- select a reward -- </option>
+		      	{% for reward in rewards %}
+		        	<option value='{{ reward }}'>{{ reward[1] + ' - ' + reward[2] }}</option>
+		      	{% endfor %}
+	    	</select><br><br>
 
-		    </form><br>
-		</div>
-		<div class="column">
-			<h2>List of Rewards</h2>
-		  	<table>
-				<tr>
-					<th>Reward ID</th>
-					<th>Reward</th>
-					<th>Reward Cost</th>
-				</tr>
-				{% for reward in rewards %}
-				<tr>
-					<td>{{ reward[0] }}</td>
-					<td>{{ reward[1] }}</td>
-					<td>{{ reward[2] }}</td>
-				</tr>
-				{% endfor %}
-		 	</table>
-		</div>
-	</div>
+			<input class="blueButton" type="submit" value="Submit" name="submitButton">
+
+    </form><br>
+
+ 	<br><br>
+ 	<button class="backButton" onclick="location.href='/admin'" type="button">Back to Admin Portal</button>
 
 {% endblock %}

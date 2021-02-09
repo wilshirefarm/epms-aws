@@ -7,9 +7,9 @@
 {% block content %}
 	<body>
     	<h2>Hi, {{ firstName }}</h2>
-  		<h3>You have {{ pointsReceived }} points that you can redeem</h3>
+  		<p>You have a total of <b>{{ pointsReceived }}</b> points that you can redeem</p>
 
-      	<button onclick="location.href='/redeem'" type="button">Redeem Points</button><br><br>
+      	<button class="blueButton" onclick="location.href='/redeem'" type="button">Redeem Points</button><br><br>
 
 		<h3>List of Redemptions you've made</h3>
 		<table>
@@ -17,18 +17,23 @@
 				<th>Reward Name</th>
 				<th>Date Redeemed</th>
 				<th>Reward Cost</th>
+				<th>Recevied?</th>
 			</tr>
 			{% for redemption in redemptions %}
 			<tr>
 				<td>{{ redemption[0] }}</td>
 				<td>{{ redemption[1] }}</td>
 				<td>{{ redemption[2] }}</td>
+				{% if redemption[3] == 1 %}
+				<td><input type="checkbox" disabled="disabled" checked></td>
+				{% else %}
+				<td><input type="checkbox" disabled="disabled"></td>
+				{% endif %}
 			</tr>
 			{% endfor %}
 	 	</table>
 
-
     <br>
-    <button onclick="location.href='/menu'" type="button">Back to Menu</button><br><br>
+    <button class="backButton" onclick="location.href='/menu'" type="button">Back to Menu</button><br><br>
 	</body>
 {% endblock %}

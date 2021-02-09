@@ -103,9 +103,9 @@ def redirectToGiftMenu():
 def giftPoints():
     recipient = request.form['recipient']
     pointsToGive = request.form['pointsToGive']
-    Comments = request.form['Comments']
+    comments = request.form['Comments']
     giverEmail = session['email']
-    comments = '\'' + str(Comments) + '\''
+    comments = '\'' + str(comments) + '\''
 
     #validate email address
     if(not re.search(emailRegex, recipient)):
@@ -125,8 +125,11 @@ def giftPoints():
     #validate points and see if they're numbers and if giver has enough points
     try:
         pointsInt = int(pointsToGive)
-        if (pointsInt < 0 or pointsInt > 1000 or isBroke(giverEmail, pointsInt)):
-            flash("Sorry, you don't have that many points to give")
+        if (isBroke(giverEmail, pointsInt)):
+            flash("Sorry, you don't have that many points to give out")
+            return redirect(url_for('redirectToGiftMenu'))
+        elif (pointsInt <= 0):
+            flash("Please enter a number greater than 0")
             return redirect(url_for('redirectToGiftMenu'))
 
         else:
@@ -181,7 +184,7 @@ def redemptionHome():
         redemptionsFromDB = readData(sqlToGetRedemptions)
         redemptions = []
         for r in redemptionsFromDB:
-            redemptions.append((rewardsDict[r[2]][0], r[3], rewardsDict[r[2]][1]))
+            redemptions.append((rewardsDict[r[2]][0], r[3], rewardsDict[r[2]][1], r[4]))
         print(redemptions)
 
         return render_template('redemptionHome.html', firstName=firstName, pointsReceived=pointsReceived, redemptions=redemptions)
@@ -295,7 +298,7 @@ def employees():
 @app.route('/redemptions')
 def redemptions():
     if 'admin' in session:
-        sqlToGetAllRedemptions = 'SELECT RedemptionID, Email, RewardName, RewardCost, RedemptionDate FROM Redemption JOIN Employee ON Employee.EmployeeID = Redemption.EmployeeID JOIN Reward ON Reward.RewardID = Redemption.RewardID ORDER BY RedemptionDate DESC;'
+        sqlToGetAllRedemptions = 'SELECT RedemptionID, Email, RewardName, RewardCost, RedemptionDate, Received FROM Redemption JOIN Employee ON Employee.EmployeeID = Redemption.EmployeeID JOIN Reward ON Reward.RewardID = Redemption.RewardID ORDER BY RedemptionDate DESC;'
         redemptions = readData(sqlToGetAllRedemptions)
         return render_template('redemptions.html', redemptions=redemptions)
     elif 'email' in session:
@@ -308,7 +311,16 @@ def transactions():
     if 'admin' in session:
         sqlToGetTransactions = 'SELECT TransactionID, e1.Email as GivenBy, e2.Email as GivenTo, PointsGiven, Comments, TransactionDate FROM Transaction JOIN Employee e1 ON e1.EmployeeID = Transaction.GivenByEmployeeID JOIN Employee e2 ON e2.EmployeeID = Transaction.GivenToEmployeeID ORDER BY TransactionDate DESC;'
         transactions = readData(sqlToGetTransactions)
-        return render_template('transactions.html', transactions=transactions)
+        transactionsList = []
+        for transaction in transactions:
+            transactionsList.append((
+                transaction[0], 
+                transaction[1], 
+                transaction[2], 
+                transaction[3], 
+                transaction[4], 
+                transaction[5].strftime("%B %-d %Y, %H:%M %p")))
+        return render_template('transactions.html', transactions=transactionsList)
     elif 'email' in session:
         return redirect(url_for('backToMenu'))
     else:

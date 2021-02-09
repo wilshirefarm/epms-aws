@@ -12,7 +12,7 @@
 			<th>Points Given To</th>
 			<th>Points</th>
 			<th>Comments</th>
-			<th>Date</th>
+			<th>Date (UTC)</th>
 		</tr>
 		{% for transaction in transactions %}
 		<tr>
@@ -27,5 +27,5 @@
  	</table>
 
     <br>
-    <button onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
+    <button class="backButton" onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
 {% endblock %}

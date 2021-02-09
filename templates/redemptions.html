@@ -12,18 +12,24 @@
 			<th>Reward</th>
 			<th>Reward Cost</th>
 			<th>Date</th>
+			<th>Received?</th>
 		</tr>
 		{% for redemption in redemptions %}
 		<tr>
-			<td>{{ redemption[0] }}</td>
+			<td><a href="/redemptions/{{ redemption[0] }}">{{ redemption[0] }}</td>
 			<td>{{ redemption[1] }}</td>
 			<td>{{ redemption[2] }}</td>
 			<td>{{ redemption[3] }}</td>
 			<td>{{ redemption[4] }}</td>
+			{% if redemption[5] == 1 %}
+			<td><input type="checkbox" disabled="disabled" checked></td>
+			{% else %}
+			<td><input type="checkbox" disabled="disabled"></td>
+			{% endif %}
 		</tr>
 		{% endfor %}
  	</table>
 
     <br>
-    <button onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
+    <button class="backButton" onclick="location.href='/admin'" type="button">Back to Admin Portal</button><br><br>
 {% endblock %}
