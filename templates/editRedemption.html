@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1>{% block title %} Redemption Received? {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<p style="font-size: 20px"><b>Redemption ID:</b> {{ redemption[0] }} </p>
+	<p style="font-size: 20px"><b>Email:</b> {{ redemption[1] }} </p>
+	<p style="font-size: 20px"><b>Reward Name:</b> {{ redemption[2] }} </p>
+	<p style="font-size: 20px"><b>Reward Cost:</b> {{ redemption[3] }} </p><br>
+
+	<h2> Check the box once the employee has received the reward</h2>
+
+	<form method="post" action="/redemptions/{{ redemption[0] }}" onsubmit="submitButton.disabled = true">
+
+		<label style="font-size: 20px" for="received"><b>Received?:</b></label>
+		{% if redemption[5] == 1 %}
+		<input name="received?" id="received?" value="1" type="checkbox" checked><br><br>
+		<input type='hidden' value="0" name='received?'>
+		{% else %}
+		<input name="received?" id="received?" value="1" type="checkbox"><br><br>
+		<input type='hidden' value="0" name='received?'>
+		{% endif %}
+
+		<input class="orangeButton" type="submit" value="Submit" name="submitButton">
+
+    </form><br><br>
+
+	<br>
+    <button class="backButton" onclick="location.href='/redemptions'" type="button">Back to Redemptions</button><br><br>
+{% endblock %}

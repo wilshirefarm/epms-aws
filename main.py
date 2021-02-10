@@ -185,7 +185,7 @@ def redemptionHome():
         redemptions = []
         for r in redemptionsFromDB:
             redemptions.append((rewardsDict[r[2]][0], r[3], rewardsDict[r[2]][1], r[4]))
-        print(redemptions)
+        #print(redemptions)
 
         return render_template('redemptionHome.html', firstName=firstName, pointsReceived=pointsReceived, redemptions=redemptions)
     else:
@@ -200,14 +200,14 @@ def redeem():
             firstName = user[0][1]
             pointsToGive = user[0][2]
             pointsReceived = user[0][3]
-            print(user)
+            #print(user)
 
             sqlToGetRewards = 'SELECT * FROM Reward'
             rewardsFromDB = readData(sqlToGetRewards)
             rewards = []
             for r in rewardsFromDB:
                 rewards.append((r[0], r[1], str(r[2]) + ' points'))
-            print(rewards)
+            #print(rewards)
             return render_template('redeem.html', firstName=firstName, pointsReceived=pointsReceived, rewards=rewards)
 
         elif request.method == 'POST':
@@ -221,7 +221,7 @@ def redeem():
             pointsReceived = user[0][4]
 
             reward = request.form['rewardSelection'].strip('()').split(',')
-            print(reward)
+            #print(reward)
             rewardId = reward[0]
             sqlToFindReward = 'SELECT * FROM Reward WHERE RewardID = ' + str(rewardId)
             row = readData(sqlToFindReward)
@@ -301,6 +301,25 @@ def redemptions():
         sqlToGetAllRedemptions = 'SELECT RedemptionID, Email, RewardName, RewardCost, RedemptionDate, Received FROM Redemption JOIN Employee ON Employee.EmployeeID = Redemption.EmployeeID JOIN Reward ON Reward.RewardID = Redemption.RewardID ORDER BY RedemptionDate DESC;'
         redemptions = readData(sqlToGetAllRedemptions)
         return render_template('redemptions.html', redemptions=redemptions)
+    elif 'email' in session:
+        return redirect(url_for('backToMenu'))
+    else:
+        return redirect(url_for('adminLogin'))
+
+@app.route('/redemptions/<redemption>', methods=('GET','POST'))
+def editRedemption(redemption):
+    if 'admin' in session:
+        if request.method == 'GET':
+            sqlToGetAllRedemption = 'SELECT RedemptionID, Email, RewardName, RewardCost, RedemptionDate, Received FROM Redemption JOIN Employee ON Employee.EmployeeID = Redemption.EmployeeID JOIN Reward ON Reward.RewardID = Redemption.RewardID WHERE RedemptionID = ' + redemption + ' ORDER BY RedemptionDate DESC;'
+            redemption = readData(sqlToGetAllRedemption)[0]
+            return render_template('editRedemption.html', redemption=redemption)
+
+        elif request.method == 'POST':
+            received = request.form['received?']
+            sqlToEditRedemption = f'UPDATE Redemption SET Received = {received} WHERE RedemptionID = {redemption};'
+            updateData(sqlToEditRedemption)
+            return redirect(url_for('redemptions'))
+
     elif 'email' in session:
         return redirect(url_for('backToMenu'))
     else:
