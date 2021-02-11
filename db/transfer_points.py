@@ -1,5 +1,9 @@
-from datetime import datetime
 from db.db import *
+from datetime import datetime
+import pytz
+
+# Set up timezone for CST
+cst_timezone = pytz.timezone('US/Central')
 
 def isBroke(giverEmail, pointsToGive):
     #check that user has enough points to give
@@ -26,7 +30,7 @@ def initiateTransfer(giverEmail, recipient, PointsGiven, comments):
     try:
         giverEmployeeId = readData("SELECT EmployeeId from Employee where Email = '" + giverEmail + "'")
         recipientEmployeeId = readData("SELECT EmployeeId from Employee where Email = '" + recipient + "'")
-        values = "(" + str(giverEmployeeId[0][0]) + "," + str(recipientEmployeeId[0][0]) + "," + str(PointsGiven) + "," + comments + ", \'" + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "\')"
+        values = "(" + str(giverEmployeeId[0][0]) + "," + str(recipientEmployeeId[0][0]) + "," + str(PointsGiven) + "," + comments + ", \'" + str(datetime.now(cst_timezone).strftime('%Y-%m-%d %H:%M:%S')) + "\')"
         print(giverEmployeeId, recipientEmployeeId, values)
         updateData("INSERT into Transaction (GivenByEmployeeId,GivenToEmployeeId,PointsGiven,Comments,TransactionDate) values" + values)
         updateData("UPDATE Employee SET PointsToGive = PointsToGive -" + str(PointsGiven)+ " WHERE EmployeeId = "+str(giverEmployeeId[0][0]))

@@ -4,6 +4,7 @@ import re
 from db.db import *
 from db.transfer_points import *
 from datetime import datetime
+import pytz
 
 # Initialize Flask
 app = Flask(__name__)
@@ -11,6 +12,9 @@ app.secret_key = b'\x11\xae\xba\x13\xca-\xa8W\x84l\xf3\xd3\xa3x\xed\x10'
 
 emailRegex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 numberRegex = '^\d{1-4}$'
+
+# Set up timezone for CST
+cst_timezone = pytz.timezone('US/Central')
 
 @app.route('/', methods=('GET', 'POST'))
 def login():
@@ -233,7 +237,7 @@ def redeem():
                 return redirect(url_for('redeem'))
 
             newPointsReceived = pointsReceived - rewardCost
-            values = "(" + str(employeeId) + "," + str(rewardId) + ", \'" + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + "\')"
+            values = "(" + str(employeeId) + "," + str(rewardId) + ", \'" + str(datetime.now(cst_timezone).strftime('%Y-%m-%d %H:%M:%S')) + "\')"
             print(datetime.now())
             sqlToCreateRedemption = 'INSERT INTO Redemption (EmployeeID, RewardID, RedemptionDate) VALUES ' + values
             updateData(sqlToCreateRedemption)

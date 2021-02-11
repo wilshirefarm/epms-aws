@@ -8,6 +8,25 @@
   <body>
     	<h2>Hi, {{ firstName }}</h2>
 
+    	<h2>Points Given</h2>
+	 	<p>You have <b>{{ pointsToGive }}</b> points that you can gift.</p>
+		<table>
+			<tr>
+				<th>To</th>
+				<th>Points</th>
+				<th>Date (UTC)</th>
+        <th>Comments</th>
+			</tr>
+			{% for transaction in transactionsGiven %}
+			<tr>
+				<td>{{ transaction[0] + " - " + transaction[1]}}</td>
+				<td>{{ transaction[2] }}</td>
+				<td>{{ transaction[3] }}</td>
+        		<td>{{ transaction[4] }}</td>
+			</tr>
+			{% endfor %}
+	 	</table>
+	 	<br>
 		<h2>Points Received</h2>
 		<p>You have <b>{{ pointsReceived }}</b> points that you can redeem.</p>
 		<table>
@@ -18,25 +37,6 @@
         <th>Comments</th>
 			</tr>
 			{% for transaction in transactionsReceived %}
-			<tr>
-				<td>{{ transaction[0] + " - " + transaction[1]}}</td>
-				<td>{{ transaction[2] }}</td>
-				<td>{{ transaction[3] }}</td>
-        		<td>{{ transaction[4] }}</td>
-			</tr>
-			{% endfor %}
-	 	</table>
-	 	<br>
-	 	<h2>Points Given</h2>
-	 	<p>You have <b>{{ pointsToGive }}</b> points that you can gift.</p>
-		<table>
-			<tr>
-				<th>To</th>
-				<th>Points</th>
-				<th>Date (UTC)</th>
-        <th>Comments</th>
-			</tr>
-			{% for transaction in transactionsGiven %}
 			<tr>
 				<td>{{ transaction[0] + " - " + transaction[1]}}</td>
 				<td>{{ transaction[2] }}</td>
