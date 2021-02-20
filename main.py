@@ -160,10 +160,27 @@ def history():
 
         sqlToGetPointsReceived = 'SELECT CONCAT(FirstName, " ", LastName), Email, PointsGiven, TransactionDate, Comments FROM epms.Transaction JOIN epms.Employee ON GivenByEmployeeID = EmployeeID WHERE GivenToEmployeeID = ' + str(employeeId) + ' ORDER BY TransactionDate DESC'
         transactionsReceived = readData(sqlToGetPointsReceived)
+        transactionsReceivedList = []
+        for transaction in transactionsReceived:
+            transactionsReceivedList.append((
+                transaction[0], 
+                transaction[1], 
+                transaction[2], 
+                transaction[3].strftime("%B %-d %Y, %-I:%M %p"), 
+                transaction[4]))
 
         sqlToGetPointsGiven = 'SELECT CONCAT(FirstName, " ", LastName), Email, PointsGiven, TransactionDate, Comments FROM epms.Transaction JOIN epms.Employee ON GivenToEmployeeID = EmployeeID WHERE GivenByEmployeeID = ' + str(employeeId) + ' ORDER BY TransactionDate DESC'
         transactionsGiven = readData(sqlToGetPointsGiven)
-        return render_template('history.html', firstName=firstName, pointsToGive=pointsToGive, pointsReceived=pointsReceived, transactionsReceived=transactionsReceived, transactionsGiven=transactionsGiven)
+        transactionsGivenList = []
+        for transaction in transactionsGiven:
+            transactionsGivenList.append((
+                transaction[0], 
+                transaction[1], 
+                transaction[2], 
+                transaction[3].strftime("%B %-d %Y, %-I:%M %p"), 
+                transaction[4]))
+
+        return render_template('history.html', firstName=firstName, pointsToGive=pointsToGive, pointsReceived=pointsReceived, transactionsReceived=transactionsReceivedList, transactionsGiven=transactionsGivenList)
     else:
         return redirect(url_for('login'))
 
@@ -188,7 +205,7 @@ def redemptionHome():
         redemptionsFromDB = readData(sqlToGetRedemptions)
         redemptions = []
         for r in redemptionsFromDB:
-            redemptions.append((rewardsDict[r[2]][0], r[3], rewardsDict[r[2]][1], r[4]))
+            redemptions.append((rewardsDict[r[2]][0], r[3].strftime("%B %-d %Y, %-I:%M %p"), rewardsDict[r[2]][1], r[4]))
         #print(redemptions)
 
         return render_template('redemptionHome.html', firstName=firstName, pointsReceived=pointsReceived, redemptions=redemptions)
@@ -304,7 +321,16 @@ def redemptions():
     if 'admin' in session:
         sqlToGetAllRedemptions = 'SELECT RedemptionID, Email, RewardName, RewardCost, RedemptionDate, Received FROM Redemption JOIN Employee ON Employee.EmployeeID = Redemption.EmployeeID JOIN Reward ON Reward.RewardID = Redemption.RewardID ORDER BY RedemptionDate DESC;'
         redemptions = readData(sqlToGetAllRedemptions)
-        return render_template('redemptions.html', redemptions=redemptions)
+        redemptionsList = []
+        for redemption in redemptions:
+            redemptionsList.append((
+                redemption[0], 
+                redemption[1], 
+                redemption[2], 
+                redemption[3], 
+                redemption[4].strftime("%B %-d %Y, %-I:%M %p"), 
+                redemption[5]))
+        return render_template('redemptions.html', redemptions=redemptionsList)
     elif 'email' in session:
         return redirect(url_for('backToMenu'))
     else:
@@ -342,7 +368,7 @@ def transactions():
                 transaction[2], 
                 transaction[3], 
                 transaction[4], 
-                transaction[5].strftime("%B %-d %Y, %H:%M %p")))
+                transaction[5].strftime("%B %-d %Y, %-I:%M %p")))
         return render_template('transactions.html', transactions=transactionsList)
     elif 'email' in session:
         return redirect(url_for('backToMenu'))
