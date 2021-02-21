@@ -7,6 +7,8 @@ config = {
   'user':'admin',
   'password':'wilshire',
   'database':'epms',
+  'ssl_ca':'db/rds-combined-ca-bundle.pem',
+  'ssl_verify_cert':True
 }
 
 def readData(sql):
