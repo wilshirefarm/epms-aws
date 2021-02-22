@@ -166,7 +166,7 @@ def history():
                 transaction[0], 
                 transaction[1], 
                 transaction[2], 
-                transaction[3].strftime("%B %-d %Y, %-I:%M %p"), 
+                transaction[3].strftime("%B %-d, %Y, %-I:%M %p"), 
                 transaction[4]))
 
         sqlToGetPointsGiven = 'SELECT CONCAT(FirstName, " ", LastName), Email, PointsGiven, TransactionDate, Comments FROM epms.Transaction JOIN epms.Employee ON GivenToEmployeeID = EmployeeID WHERE GivenByEmployeeID = ' + str(employeeId) + ' ORDER BY TransactionDate DESC'
@@ -177,7 +177,7 @@ def history():
                 transaction[0], 
                 transaction[1], 
                 transaction[2], 
-                transaction[3].strftime("%B %-d %Y, %-I:%M %p"), 
+                transaction[3].strftime("%B %-d, %Y, %-I:%M %p"), 
                 transaction[4]))
 
         return render_template('history.html', firstName=firstName, pointsToGive=pointsToGive, pointsReceived=pointsReceived, transactionsReceived=transactionsReceivedList, transactionsGiven=transactionsGivenList)
@@ -205,7 +205,7 @@ def redemptionHome():
         redemptionsFromDB = readData(sqlToGetRedemptions)
         redemptions = []
         for r in redemptionsFromDB:
-            redemptions.append((rewardsDict[r[2]][0], r[3].strftime("%B %-d %Y, %-I:%M %p"), rewardsDict[r[2]][1], r[4]))
+            redemptions.append((rewardsDict[r[2]][0], r[3].strftime("%B %-d, %Y, %-I:%M %p"), rewardsDict[r[2]][1], r[4]))
         #print(redemptions)
 
         return render_template('redemptionHome.html', firstName=firstName, pointsReceived=pointsReceived, redemptions=redemptions)
@@ -328,7 +328,7 @@ def redemptions():
                 redemption[1], 
                 redemption[2], 
                 redemption[3], 
-                redemption[4].strftime("%B %-d %Y, %-I:%M %p"), 
+                redemption[4].strftime("%B %-d, %Y, %-I:%M %p"), 
                 redemption[5]))
         return render_template('redemptions.html', redemptions=redemptionsList)
     elif 'email' in session:
@@ -368,7 +368,7 @@ def transactions():
                 transaction[2], 
                 transaction[3], 
                 transaction[4], 
-                transaction[5].strftime("%B %-d %Y, %-I:%M %p")))
+                transaction[5].strftime("%B %-d, %Y, %-I:%M %p")))
         return render_template('transactions.html', transactions=transactionsList)
     elif 'email' in session:
         return redirect(url_for('backToMenu'))
