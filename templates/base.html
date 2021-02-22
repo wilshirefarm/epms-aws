@@ -2,14 +2,14 @@
 <html>
 
  <head>
-    <title>{% block title %} Employee Point System {% endblock %}</title>
+    <title>{% block title %} WilshPoints {% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <link rel="shortcut icon" href="../static/favicon.ico"/>
   </head>
   <div>
     <nav>
         <ul>
-          <li><a href="/">Employee Point System</a>
+          <li><a href="/">Wilsh Points Portal</a>
           {% if 'email' in session %}
             <li><a href="/logout">Log Out</a>
             <li><a href="/">Hi, {{ session['email'] }}</a>
